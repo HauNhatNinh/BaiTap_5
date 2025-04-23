@@ -70,7 +70,7 @@
 
    - Trigger sẽ cập nhật trường __tong_tien__ trong bảng __don_dat__ cho đơn hàng tương ứng bằng cách tính lại tổng tiền từ bảng __chi_tiet_don__ và __mon_an__.
 
-   - _SUM(chi_tiet_don.so_luong * mon_an.gia)_ sẽ tính tổng tiền cho đơn hàng dựa trên số lượng và giá của mỗi món ăn.
+   - ``` SUM(chi_tiet_don.so_luong * mon_an.gia) ``` sẽ tính tổng tiền cho đơn hàng dựa trên số lượng và giá của mỗi món ăn.
 
 
 ### Nhập dữ liệu cho các bảng trong database, test trigger
@@ -92,16 +92,18 @@
 ##### => Trigger đã hoạt động.
 
 #### Kết Luận:
-- Trigger đã giúp cho đồ án của em:
+- Trigger đã giúp cho đồ án của tôi:
   - Giảm rủi ro người dùng/nhân viên quên tính tổng tiền, hoặc tính sai.
   - Trigger giúp dữ liệu luôn đồng bộ giữa chi tiết đơn và đơn chính.
 ###### => Đảm bảo toàn vẹn dữ liệu 
 
 - Dễ dàng thống kê doanh thu, lợi nhuận, các phân tích theo thời gian, theo người dùng, món ăn...
 - Ví dụ: tổng doanh thu trong ngày chỉ cần:
-  - 
-
-
+   ```sql
+   SELECT SUM(tong_tien) FROM don_dat WHERE CAST(thoi_gian_dat AS DATE) = '2025-04-23';
+###### => Hỗ trợ thống kê nhanh và chính xác 
+  
+### Tóm lại: Trigger _tong_tien_ đã tự động hóa, tối ưu hóa và bảo vệ dữ liệu, góp phần biến hệ thống quán cơm sinh viên TNUT của tôi trở nên thực tế và đáng tin cậy hơn nhiều.
 
 
 

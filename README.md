@@ -31,7 +31,28 @@
      - Mục đích: Lưu trữ thông tin về các đơn đặt hàng của khách hàng.
    - Bảng chi_tiet_don:
      - Mục đích: Lưu trữ thông tin chi tiết về các món ăn trong mỗi đơn hàng, bao gồm số lượng món.    
+ - Check Constraints (CK) của một số bảng và lợi ích của chúng:
+   - Bảng thuc_don:
+     - Ràng buộc ca_an: Đảm bảo giá trị của ca_an chỉ có thể là "trưa" hoặc "tối".
+   - Bảng mon_an:
+	  - Ràng buộc giá món ăn: Đảm bảo giá món ăn phải lớn hơn 0.
+   - Bảng chi_tiet_don:
+     - Ràng buộc số lượng món ăn: Đảm bảo số lượng món ăn trong đơn hàng phải lớn hơn 0.
+   - Bảng nguoi_dung:
+     - Ràng buộc email: Đảm bảo email phải chứa ký tự "@" (một kiểm tra đơn giản về định dạng email).
+### Thêm trường phi chuẩn
 
+  Trường phi chuẩn là những trường không cần thiết phải lưu trong cơ sở dữ liệu, nhưng có thể tính toán một cách dễ dàng thông qua các truy vấn. Tuy nhiên, nếu chúng ta muốn tăng tốc độ truy vấn hoặc giảm tải tính toán cho các hệ thống, việc lưu trữ các trường phi chuẩn có thể là một sự cải thiện tốt.
+  
+  Ở database này tôi sẽ thêm một trường __tong_tien__ vào trong bảng __don_dat__, trường này sẽ lưu tổng tiền mà người dùng phải thanh toán cho đơn đặt hàng, thay vì phải tính lại mỗi khi cần thiết.
+
+  #### Logic:
+
+  Trường __tong_tien__ được tính bằng cách nhân giá món ăn với số lượng món ăn trong __chi_tiet_don__. Việc tính toán này có thể được thực hiện qua một *JOIN* giữa các bảng __don_dat__, __chi_tiet_don__, và __mon_an__. Tuy nhiên, để giảm bớt việc tính toán lặp lại mỗi khi truy vấn đơn đặt hàng, ta có thể lưu sẵn trường này vào bảng __don_dat__.
+
+  Việc thêm trường này sẽ giúp giảm thời gian truy vấn, đặc biệt là trong trường hợp hệ thống có rất nhiều đơn đặt hàng và yêu cầu tính toán tổng tiền nhiều lần. 
+
+  #### => Trường *tong_tien* sẽ được tính tự động và cập nhật mỗi khi có thay đổi trong bảng *chi_tiet_don* hoặc *mon_an*.
 
 
 

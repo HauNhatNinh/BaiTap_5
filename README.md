@@ -46,6 +46,8 @@
   
   Ở database này tôi sẽ thêm một trường __tong_tien__ vào trong bảng __don_dat__, trường này sẽ lưu tổng tiền mà người dùng phải thanh toán cho đơn đặt hàng, thay vì phải tính lại mỗi khi cần thiết.
 
+  ![Screenshot (44)](https://github.com/user-attachments/assets/4bf901e6-4d25-407b-bfcd-becb304665c8)
+
   #### Logic:
 
   Trường __tong_tien__ được tính bằng cách nhân giá món ăn với số lượng món ăn trong __chi_tiet_don__. Việc tính toán này có thể được thực hiện qua một *JOIN* giữa các bảng __don_dat__, __chi_tiet_don__, và __mon_an__. Tuy nhiên, để giảm bớt việc tính toán lặp lại mỗi khi truy vấn đơn đặt hàng, ta có thể lưu sẵn trường này vào bảng __don_dat__.
@@ -54,13 +56,50 @@
 
   #### => Trường *tong_tien* sẽ được tính tự động và cập nhật mỗi khi có thay đổi trong bảng *chi_tiet_don* hoặc *mon_an*.
 
+  ![Screenshot (45)](https://github.com/user-attachments/assets/b762b903-d117-4b72-8255-e95f811fa22a)
+
+  #### Mục tiêu của Trigger:
+
+   - Mục tiêu 1: Cập nhật trường tong_tien mỗi khi có sự thay đổi trong bảng chi_tiet_don hoặc mon_an (khi có thay đổi về giá món ăn hoặc số lượng món ăn).
+
+   - Mục tiêu 2: Đảm bảo tính chính xác của trường phi chuẩn mà không cần phải tính lại thủ công mỗi lần người dùng truy vấn.
+     
+  #### Giải thích Trigger:
+
+   - Khi có thay đổi trong bảng __chi_tiet_don__ (thêm, cập nhật, hoặc xóa), Trigger sẽ tự động chạy.
+
+   - Trigger sẽ cập nhật trường __tong_tien__ trong bảng __don_dat__ cho đơn hàng tương ứng bằng cách tính lại tổng tiền từ bảng __chi_tiet_don__ và __mon_an__.
+
+   - _SUM(chi_tiet_don.so_luong * mon_an.gia)_ sẽ tính tổng tiền cho đơn hàng dựa trên số lượng và giá của mỗi món ăn.
 
 
+### Nhập dữ liệu cho các bảng trong database, test trigger
+- Tiến hành nhập dữ liệu để test hiệu quả của trigger
+  
+  ![image](https://github.com/user-attachments/assets/7e2bec02-8c49-4fd2-9a1e-38388311a1d8)
 
 
+#### Test truy vấn sau khi thêm trigger auto run
+- Mục tiêu: Thêm 1 món mới vào một đơn đã có, và xem tong_tien có tự cập nhật hay không.
+- Truy vấn test trigger: Giả sử muốn thêm món "Cơm sườn" (mã món = 2) vào đơn ma_don = 3:
+- Kết quả mong đợi:
+   __tong_tien__ của đơn hàng số 3 sẽ tăng thêm 25.000 so với giá trị cũ.
+  
+  • Nếu đúng như vậy → trigger hoạt động tốt.
+   
+![Screenshot (46)](https://github.com/user-attachments/assets/35ed2785-6b32-4af8-af0a-f22cb6dda7f3)
 
+##### => Trigger đã hoạt động.
 
+#### Kết Luận:
+- Trigger đã giúp cho đồ án của em:
+  - Giảm rủi ro người dùng/nhân viên quên tính tổng tiền, hoặc tính sai.
+  - Trigger giúp dữ liệu luôn đồng bộ giữa chi tiết đơn và đơn chính.
+###### => Đảm bảo toàn vẹn dữ liệu 
 
+- Dễ dàng thống kê doanh thu, lợi nhuận, các phân tích theo thời gian, theo người dùng, món ăn...
+- Ví dụ: tổng doanh thu trong ngày chỉ cần:
+  - 
 
 
 

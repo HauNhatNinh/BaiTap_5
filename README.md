@@ -1,4 +1,4 @@
-# BaiTap_5 by HẦU NHẬT NINH - K225480106077 - K58KMT
+# BaiTap_5 by HẦU NHẬT NINH - K225480106077 - K58KTP.K01
 # Trigger on MSSQL
 ## Tên đề tài: PHÂN TÍCH THIẾT KẾ HỆ THỐNG ĐẶT ĐỒ ĂN ONLINE CHO QUÁN CƠM TNUT
 ### YÊU CẦU BÀI TOÁN:

@@ -100,7 +100,7 @@
 - Dễ dàng thống kê doanh thu, lợi nhuận, các phân tích theo thời gian, theo người dùng, món ăn...
 - Ví dụ: tổng doanh thu trong ngày chỉ cần:
    ```sql
-   SELECT SUM(tong_tien) FROM don_dat WHERE CAST(thoi_gian_dat AS DATE) = '2025-04-23';
+   SELECT SUM(tong_tien) FROM don_dat WHERE CAST(thoi_gian_dat AS DATE) = 'yy-mm-dd';
    
 ###### => Hỗ trợ thống kê nhanh và chính xác 
   
